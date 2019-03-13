@@ -1,0 +1,2 @@
+
+export const LOGIN_SOMETHING = "LOGIN_SOMETHING";
