@@ -2,16 +2,19 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next'
+import { CookieProvider } from 'react-cookie'
 
 import i18n from './i18n';
 import { store } from './_store';
 import { App } from './App';
 
 render(
-    <I18nextProvider i18n={i18n}>
-        <Provider store={store}>
-            <App />
-        </Provider>
-    </I18nextProvider>,
+    <CookieProvider>
+        <I18nextProvider i18n={i18n}>
+            <Provider store={store}>
+                <App />
+            </Provider>
+        </I18nextProvider>
+    </CookieProvider>,
     document.getElementById('app')
 );

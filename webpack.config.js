@@ -16,5 +16,10 @@ module.exports = {
     })],
     devServer: {
         historyApiFallback: true
+    },
+    externals: {
+        config: JSON.stringify({
+            apiUrl: 'http://localhost:5000'
+        })
     }
 }

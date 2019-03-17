@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Trans } from  'react-i18next'
+import { Trans } from 'react-i18next'
 
 class LoginPage extends React.Component {
     constructor(props) {
