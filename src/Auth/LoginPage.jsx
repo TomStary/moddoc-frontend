@@ -1,6 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Trans } from 'react-i18next'
+import { Trans } from 'react-i18next';
+
+import { userActions } from '../_actions'
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -34,16 +37,17 @@ class LoginPage extends React.Component {
     }
 
     render() {
-        const { login } = this.props;
+        const { loggingIn } = this.props;
         const { username, password, submitted } = this.state;
         return (
             <div>
                 <h2><Trans i18nKey="LOGIN_PAGE_HEADER">trans</Trans></h2>
-                <form name='login'>
+                <form name='login' onSubmit={this.handleSubmit}>
                     <input type="text" name="username" value={username} onChange={this.handleChange} />
                     <input type="password" name="password" value={password} onChange={this.handleChange} />
                     <button>Login</button>
                 </form>
+                <Link to="/registration"><Trans i18nKey="REGISTRATION_LINK">reg</Trans></Link>
             </div>
         );
     }

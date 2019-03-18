@@ -3,20 +3,20 @@ import { connect } from 'react-redux';
 
 class HomePage extends React.Component {
     render() {
+        const { user } = this.props;
         return (
             <div className="col-md-6 col-md-offset-3">
-                <h1>Hi!</h1>
+                <h1>Hi {user.username}!</h1>
             </div>
         );
     }
 }
 
 function mapStateToProps(state) {
-    const { users, authentication } = state;
+    const { authentication } = state;
     const { user } = authentication;
     return {
-        user,
-        users
+        user
     };
 }
 
