@@ -9,12 +9,14 @@ i18n
         resources: {
             en: {
                 translations: {
-                    LOGIN_PAGE_HEADER: "Login to your accout"
+                    LOGIN_PAGE_HEADER: "Login to your accout",
+                    BACK_TO_LOGIN: "Back to login"
                 }
             },
             cs: {
                 translations: {
-                    LOGIN_PAGE_HEADER: "Přihlašte se ke svému účtu"
+                    LOGIN_PAGE_HEADER: "Přihlašte se ke svému účtu",
+                    BACK_TO_LOGIN: "Zpět na přihlášení"
                 }
             }
         },

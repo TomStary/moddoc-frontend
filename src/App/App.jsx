@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { alertActions } from '../_actions';
 import { history } from '../_helpers';
-import { LoginPage } from '../Auth';
+import { LoginPage, RegistrationPage } from '../Auth';
 import { HomePage } from '../Home';
 import { AuthRouter } from '../_components';
 
@@ -15,7 +15,6 @@ class App extends React.Component {
         const { dispatch } = this.props;
         history.listen((location, action) => {
             // clear alert on location change
-            console.log("listening");
             dispatch(alertActions.clear());
         });
     }
@@ -33,6 +32,7 @@ class App extends React.Component {
                             <div>
                                 <AuthRouter exact path="/" component={HomePage} />
                                 <Route path="/login" component={LoginPage} />
+                                <Route path="/registration" component={RegistrationPage} />
                             </div>
                         </Router>
                     </div>
