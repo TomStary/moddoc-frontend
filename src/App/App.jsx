@@ -1,11 +1,13 @@
 import React from 'react';
 import { Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Container, Row, Col, Jumbotron, Alert } from 'reactstrap';
 
 import { alertActions } from '../_actions';
 import { history } from '../_helpers';
 import { LoginPage, RegistrationPage } from '../Auth';
 import { HomePage } from '../Home';
+import { NavComponent } from '../Nav';
 import { AuthRouter } from '../_components';
 
 class App extends React.Component {
@@ -22,22 +24,27 @@ class App extends React.Component {
     render() {
         const { alert } = this.props;
         return (
-            <div className="jumbotron">
-                <div className="container">
-                    <div className="col-sm-8 col-sm-offset-2">
-                        {alert.message &&
-                            <div className="alert">{alert.message}</div>
-                        }
-                        <Router history={history}>
-                            <div>
-                                <AuthRouter exact path="/" component={HomePage} />
-                                <Route path="/login" component={LoginPage} />
-                                <Route path="/registration" component={RegistrationPage} />
-                            </div>
-                        </Router>
-                    </div>
-                </div>
-            </div>
+            <React.Fragment>
+                <NavComponent />
+                <Jumbotron>
+                    <Container>
+                        <Row>
+                            <Col sm={{ size: 8, offset: 2 }}>
+                                {alert.message &&
+                                    <Alert color="warning">{alert.message}</Alert>
+                                }
+                                <Router history={history}>
+                                    <div>
+                                        <AuthRouter exact path="/" component={HomePage} />
+                                        <Route path="/login" component={LoginPage} />
+                                        <Route path="/registration" component={RegistrationPage} />
+                                    </div>
+                                </Router>
+                            </Col>
+                        </Row>
+                    </Container>
+                </Jumbotron>
+            </React.Fragment>
         );
     }
 }

@@ -3,8 +3,10 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next'
 import { CookiesProvider } from 'react-cookie'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import i18n from './i18n';
+
+import i18n from 'i18next';
 import { store } from './_store';
 import { App } from './App';
 

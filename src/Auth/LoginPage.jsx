@@ -1,7 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Trans } from 'react-i18next';
+import { Trans, withTranslation } from 'react-i18next';
+import { Form,
+    FormGroup,
+    Button,
+    Input,
+    Card,
+    CardBody,
+    CardTitle,
+    Row,
+    Col
+} from 'reactstrap';
 
 import { userActions } from '../_actions'
 
@@ -27,7 +37,6 @@ class LoginPage extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-
         this.setState({ submitted: true });
         const { username, password } = this.state;
         const { dispatch } = this.props;
@@ -37,18 +46,30 @@ class LoginPage extends React.Component {
     }
 
     render() {
-        const { loggingIn } = this.props;
+        const { loggingIn, t } = this.props;
         const { username, password, submitted } = this.state;
         return (
-            <div>
-                <h2><Trans i18nKey="LOGIN_PAGE_HEADER">trans</Trans></h2>
-                <form name='login' onSubmit={this.handleSubmit}>
-                    <input type="text" name="username" value={username} onChange={this.handleChange} />
-                    <input type="password" name="password" value={password} onChange={this.handleChange} />
-                    <button>Login</button>
-                </form>
-                <Link to="/registration"><Trans i18nKey="REGISTRATION_LINK">reg</Trans></Link>
-            </div>
+            <React.Fragment>
+                <Row>
+                    <Col md={{ size: 8, offset: 2 }}>
+                        <Card>
+                            <CardBody>
+                                <h3><Trans i18nKey="LOGIN_PAGE_HEADER">trans</Trans></h3>
+                                <Form name='login' onSubmit={this.handleSubmit}>
+                                    <FormGroup>
+                                        <Input type="text" name="username" id="loginUsername" placeholder={t("Username or email")} onChange={this.handleChange} />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Input type="password" name="password" id="loginPassword" placeholder={t("Password")} onChange={this.handleChange} />
+                                    </FormGroup>
+                                    <Button>Login</Button>
+                                </Form>
+                                <Link to="/registration"><Trans i18nKey="REGISTRATION_LINK">reg</Trans></Link>
+                            </CardBody>
+                        </Card>
+                    </Col>
+                </Row>
+            </React.Fragment>
         );
     }
 }
@@ -60,5 +81,5 @@ function mapStateToProps(state) {
     };
 }
 
-const connectedLoginPage = connect(mapStateToProps)(LoginPage);
+const connectedLoginPage = withTranslation()(connect(mapStateToProps)(LoginPage));
 export { connectedLoginPage as LoginPage };
