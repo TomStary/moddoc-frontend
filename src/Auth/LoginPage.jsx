@@ -2,16 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Trans, withTranslation } from 'react-i18next';
-import { Form,
-    FormGroup,
-    Button,
-    Input,
+import { Button,
     Card,
     CardBody,
-    CardTitle,
     Row,
     Col
 } from 'reactstrap';
+import { AvGroup, AvForm, AvInput, AvFeedback } from 'availity-reactstrap-validation';
 
 import { userActions } from '../_actions'
 
@@ -55,15 +52,17 @@ class LoginPage extends React.Component {
                         <Card>
                             <CardBody>
                                 <h3><Trans i18nKey="LOGIN_PAGE_HEADER">trans</Trans></h3>
-                                <Form name='login' onSubmit={this.handleSubmit}>
-                                    <FormGroup>
-                                        <Input type="text" name="username" id="loginUsername" placeholder={t("Username or email")} onChange={this.handleChange} />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Input type="password" name="password" id="loginPassword" placeholder={t("Password")} onChange={this.handleChange} />
-                                    </FormGroup>
-                                    <Button>Login</Button>
-                                </Form>
+                                <AvForm name='login' onSubmit={this.handleSubmit}>
+                                    <AvGroup>
+                                        <AvInput type="text" name="username" id="loginUsername" placeholder={t("Username or email")} onChange={this.handleChange} required />
+                                        <AvFeedback>{t("Username or email is required.")}</AvFeedback>
+                                    </AvGroup>
+                                    <AvGroup>
+                                        <AvInput type="password" name="password" id="loginPassword" placeholder={t("Password")} onChange={this.handleChange} required />
+                                        <AvFeedback>{t("Password is required.")}</AvFeedback>
+                                    </AvGroup>
+                                    <Button>{t("Login")}</Button>
+                                </AvForm>
                                 <Link to="/registration"><Trans i18nKey="REGISTRATION_LINK">reg</Trans></Link>
                             </CardBody>
                         </Card>

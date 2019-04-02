@@ -1,4 +1,5 @@
 import React from 'react';
+import { Cookies } from 'react-cookie';
 import { connect } from 'react-redux';
 
 class HomePage extends React.Component {

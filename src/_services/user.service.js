@@ -1,9 +1,12 @@
-import config from 'config'
+import { Cookies } from 'react-cookie';
+import config from 'config';
 
 export const userService = {
     login,
     register,
 };
+
+const cookie = new Cookies();
 
 function createRequestOptions(data) {
     return {
@@ -26,7 +29,7 @@ function login(username, password) {
     return fetch(`${config.apiUrl}/auth/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
-            localStorage.setItem('user', JSON.stringify(user));
+            cookie.set('token', user.token);
 
             return user;
         });
@@ -38,7 +41,7 @@ function register(user) {
     return fetch(`${config.apiUrl}/auth/registration`, requestOptions)
         .then(handleResponse)
         .then(user => {
-            localStorage.setItem(user, JSON.stringify(user));
+            cookie.set('token', user.token);
 
             return user;
         });
@@ -47,6 +50,12 @@ function register(user) {
 function handleResponse(response) {
     return response.text().then(text => {
         const data = JSON.parse(text);
+        if (response.status == 400) {
+            if (data.error.message) {
+                const error = data.error.message;
+                return Promise.reject(error);
+            }
+        }
         if (!response.ok) {
             const error = data.error[0].message;
             return Promise.reject(error);

@@ -2,6 +2,8 @@ import React from 'react';
 import { Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Container, Row, Col, Jumbotron, Alert } from 'reactstrap';
+import { withTranslation } from 'react-i18next';
+import Cookies from 'universal-cookie';
 
 import { alertActions } from '../_actions';
 import { history } from '../_helpers';
@@ -14,15 +16,25 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            visible: true,
+        };
+
         const { dispatch } = this.props;
         history.listen((location, action) => {
             // clear alert on location change
             dispatch(alertActions.clear());
         });
+
+        this.onDismiss = this.onDismiss.bind(this);
+    }
+
+    onDismiss() {
+        this.setState({ visible: false });
     }
 
     render() {
-        const { alert } = this.props;
+        const { alert, t } = this.props;
         return (
             <React.Fragment>
                 <NavComponent />
@@ -31,7 +43,9 @@ class App extends React.Component {
                         <Row>
                             <Col sm={{ size: 8, offset: 2 }}>
                                 {alert.message &&
-                                    <Alert color="warning">{alert.message}</Alert>
+                                    <Alert color={alert.type} isOpen={this.state.visible} toggle={this.onDismiss}>
+                                        {t(alert.message)}
+                                    </Alert>
                                 }
                                 <Router history={history}>
                                     <div>
@@ -56,5 +70,5 @@ function mapStateToProps(state) {
     };
 }
 
-const connectedApp = connect(mapStateToProps)(App);
+const connectedApp = withTranslation()(connect(mapStateToProps)(App));
 export { connectedApp as App };

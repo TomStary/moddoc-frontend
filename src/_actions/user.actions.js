@@ -1,6 +1,6 @@
 import { alertActions } from './';
 import { userConstants } from '../_constants';
-import { history } from '../_helpers';
+import { history, i18n } from '../_helpers';
 import { userService } from '../_services';
 
 export const userActions = {
@@ -14,13 +14,14 @@ function login(username, password) {
 
         userService.login(username, password)
             .then(
-                user => {
-                    dispatch(success(user));
+                token => {
+                    dispatch(success(token));
                     history.push('/');
+                    dispatch(alertActions.success(i18n.t('Successfully logged in.')));
                 },
                 error => {
-                    dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
+                    dispatch(failure(error));
+                    dispatch(alertActions.error(error));
                 }
             );
     };
@@ -39,6 +40,7 @@ function register(user) {
                 user => {
                     dispatch(success(user));
                     history.push('/');
+                    dispatch(alertActions.success(i18n.t('Successfully logged in.')));
                 },
                 error => {
                     dispatch(failure(error.toString()));

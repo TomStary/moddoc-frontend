@@ -7,7 +7,10 @@ export function registration(state = {}, action) {
                 registration: true
             };
         case userConstants.REGISTRATION_SUCCESS:
-            return {};
+            return {
+                loggedIn: true,
+                user: action.user
+            };
         case userConstants.REGISTRATION_ERROR:
             return {};
         default:

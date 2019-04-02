@@ -7,9 +7,10 @@ import { Navbar,
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
-    DropdownItem
+    DropdownItem,
+    NavItem,
+    NavLink
 } from 'reactstrap';
-import { withTranslation } from 'react-i18next';
 
 class NavComponent extends React.Component {
     constructor(props) {
@@ -21,7 +22,7 @@ class NavComponent extends React.Component {
         const { t, i18n } = this.props;
         return (
             <React.Fragment>
-                <Navbar color="dark" dark expand="md">
+                <Navbar color="dark" dark expand="lg">
                     <NavbarBrand href="/">Moddoc</NavbarBrand>
                     <Nav ml="auto" navbar>
                         <UncontrolledDropdown nav>
@@ -44,6 +45,6 @@ class NavComponent extends React.Component {
     }
 }
 
-const NavComponentPage = withTranslation()(NavComponent)
+const NavComponentPage =withTranslation()(NavComponent)
 
 export { NavComponentPage as NavComponent };
