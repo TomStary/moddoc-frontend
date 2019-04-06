@@ -4,6 +4,7 @@ import { Navbar,
     Nav,
     Row,
     Col,
+    Container,
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
@@ -11,6 +12,7 @@ import { Navbar,
     NavItem,
     NavLink
 } from 'reactstrap';
+import { withTranslation } from 'react-i18next';
 
 class NavComponent extends React.Component {
     constructor(props) {
@@ -23,22 +25,24 @@ class NavComponent extends React.Component {
         return (
             <React.Fragment>
                 <Navbar color="dark" dark expand="lg">
-                    <NavbarBrand href="/">Moddoc</NavbarBrand>
-                    <Nav ml="auto" navbar>
-                        <UncontrolledDropdown nav>
-                            <DropdownToggle nav caret>
-                                {t("Language")}
-                            </DropdownToggle>
-                            <DropdownMenu right>
-                                <DropdownItem onClick={() => i18n.changeLanguage('en')}>
-                                    {t("English")}
-                                </DropdownItem>
-                                <DropdownItem onClick={() => i18n.changeLanguage('cs')}>
-                                    {t("Czech")}
-                                </DropdownItem>
-                            </DropdownMenu>
-                        </UncontrolledDropdown>
-                    </Nav>
+                    <Container>
+                        <NavbarBrand href="/">Moddoc</NavbarBrand>
+                        <Nav ml="auto" navbar>
+                            <UncontrolledDropdown nav>
+                                <DropdownToggle nav caret>
+                                    {t("Language")}
+                                </DropdownToggle>
+                                <DropdownMenu right>
+                                    <DropdownItem onClick={() => i18n.changeLanguage('en')}>
+                                        {t("English")}
+                                    </DropdownItem>
+                                    <DropdownItem onClick={() => i18n.changeLanguage('cs')}>
+                                        {t("Czech")}
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
+                        </Nav>
+                    </Container>
                 </Navbar>
             </React.Fragment>
         );

@@ -1,5 +1,6 @@
 import { Cookies } from 'react-cookie';
 import config from 'config';
+import { createRequestOptions } from './';
 
 export const userService = {
     login,
@@ -7,17 +8,6 @@ export const userService = {
 };
 
 const cookie = new Cookies();
-
-function createRequestOptions(data) {
-    return {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data),
-        credentials: 'same-origin',
-    }
-}
 
 function login(username, password) {
     let data = {
