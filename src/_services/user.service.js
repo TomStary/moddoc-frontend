@@ -19,7 +19,8 @@ function login(username, password) {
     return fetch(`${config.apiUrl}/auth/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
-            cookie.set('token', user.token);
+            cookie.set('access_token', user.access_token, { maxAge: 900 });
+            cookie.set('refresh_token', user.refresh_token, { maxAge: 30*24*60*60 }) // d*h*m*s
 
             return user;
         });
@@ -31,7 +32,8 @@ function register(user) {
     return fetch(`${config.apiUrl}/auth/registration`, requestOptions)
         .then(handleResponse)
         .then(user => {
-            cookie.set('token', user.token);
+            cookie.set('access_token', user.access_token, { maxAge: 900 });
+            cookie.set('refresh_token', user.refresh_token, { maxAge: 30*24*60*60 }) // d*h*m*s
 
             return user;
         });
