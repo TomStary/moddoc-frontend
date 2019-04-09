@@ -30,7 +30,8 @@ module.exports = {
         template: './src/index.html'
     })],
     devServer: {
-        historyApiFallback: true
+        historyApiFallback: true,
+        disableHostCheck: true
     },
     externals: {
         config: JSON.stringify({

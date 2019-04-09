@@ -19,7 +19,8 @@
     "reactstrap": "^7.1.0",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "refresh-fetch": "^0.6.0"
   },
   "scripts": {
     "start": "webpack-dev-server --mode development",

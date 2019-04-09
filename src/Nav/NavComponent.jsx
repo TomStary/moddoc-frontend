@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Navbar,
     NavbarBrand,
     Nav,
@@ -13,6 +14,7 @@ import { Navbar,
     NavLink
 } from 'reactstrap';
 import { withTranslation } from 'react-i18next';
+import { UserNav } from './'
 
 class NavComponent extends React.Component {
     constructor(props) {
@@ -22,6 +24,7 @@ class NavComponent extends React.Component {
 
     render() {
         const { t, i18n } = this.props;
+
         return (
             <React.Fragment>
                 <Navbar color="dark" dark expand="lg">
@@ -41,6 +44,7 @@ class NavComponent extends React.Component {
                                     </DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>
+                            <UserNav />
                         </Nav>
                     </Container>
                 </Navbar>
@@ -49,6 +53,14 @@ class NavComponent extends React.Component {
     }
 }
 
-const NavComponentPage =withTranslation()(NavComponent)
+function mapStateToProps(state) {
+    const { authentication } = state;
+    const { user } = authentication;
+    return {
+        user
+    };
+}
+
+const NavComponentPage = connect(mapStateToProps)(withTranslation()(NavComponent))
 
 export { NavComponentPage as NavComponent };

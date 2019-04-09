@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Trans, withTranslation } from 'react-i18next';
 import { Button,
     Card,
@@ -10,7 +11,8 @@ import { Button,
 } from 'reactstrap';
 import { AvGroup, AvForm, AvInput, AvFeedback } from 'availity-reactstrap-validation';
 
-import { userActions } from '../_actions'
+import { userActions, alertActions } from '../_actions';
+import { store } from '../_store';
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -19,8 +21,7 @@ class LoginPage extends React.Component {
 
         this.state = {
             username: '',
-            password: '',
-            submitted: false,
+            password: ''
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -33,18 +34,21 @@ class LoginPage extends React.Component {
     }
 
     handleSubmit(e) {
-        e.preventDefault();
-        this.setState({ submitted: true });
         const { username, password } = this.state;
-        const { dispatch } = this.props;
+        const { i18n } = this.props;
         if (username && password) {
-            dispatch(userActions.login(username, password));
+            this.props.login(username, password);
+            store = store.getStore();
+            if (store.authentication.loggedIn)
+                this.props.alert("success", i18n.t('Successfully logged in.'));
+            else
+                this.props.alert("error", store.authentication.error);
         }
     }
 
     render() {
-        const { loggingIn, t } = this.props;
-        const { username, password, submitted } = this.state;
+        const { t } = this.props;
+        const { username, password } = this.state;
         return (
             <React.Fragment>
                 <Row>
@@ -74,11 +78,18 @@ class LoginPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { loggingIn } = state.authentication;
-    return {
-        loggingIn
-    };
+    return {};
 }
 
-const connectedLoginPage = withTranslation()(connect(mapStateToProps)(LoginPage));
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(
+        {
+            login: userActions.login,
+            alert: alertActions.showNotification
+        },
+        dispatch
+    );
+}
+
+const connectedLoginPage = withTranslation()(connect(mapStateToProps, mapDispatchToProps)(LoginPage));
 export { connectedLoginPage as LoginPage };

@@ -1,34 +1,29 @@
 import { alertActions } from './';
 import { userConstants } from '../_constants';
-import { history, i18n } from '../_helpers';
+import { history, i18n, logout as LogoutR } from '../_helpers';
 import { userService } from '../_services';
 
 export const userActions = {
     login,
-    register
+    register,
+    logout
 }
 
 function login(username, password) {
-    return dispatch => {
-        dispatch(request({ username }));
-
-        userService.login(username, password)
+    userService.login(username, password)
             .then(
                 token => {
-                    dispatch(success(token));
+                    const localUser = {
+                        username: token.username,
+                    };
+                    localStorage.setItem('user', JSON.stringify(localUser));
                     history.push('/');
-                    dispatch(alertActions.success(i18n.t('Successfully logged in.')));
+                    return { type: userConstants.LOGIN_REQUEST, token };
                 },
                 error => {
-                    dispatch(failure(error));
-                    dispatch(alertActions.error(error));
+                    return { type: userConstants.LOGIN_FAILURE, error };
                 }
             );
-    };
-
-    function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
-    function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
-    function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
 function register(user) {
@@ -52,4 +47,21 @@ function register(user) {
     function request(user) { return { type: userConstants.REGISTRATION_REQUEST, user } }
     function success(user) { return { type: userConstants.REGISTRATION_SUCCESS, user } }
     function failure(error) { return { type: userConstants.REGISTRATION_ERROR, error } }
+}
+
+
+function logout() {
+    return dispatch => {
+        LogoutR()
+            .then(
+                () => {
+                    localStorage.removeItem('user');
+                    dispatch(success());
+                    history.push('/');
+                    dispatch(alertActions.success(i18n.t('Successfully logged out.')));
+                },
+            );
+    };
+
+    function success() { return { type: userConstants.LOGOUT } }
 }

@@ -1,20 +1,24 @@
-import { alertConstants } from '../_constants'
+import {
+    alertConstants
+} from '../_constants'
 
-export function alert(state = {}, action) {
+const initialState = {
+    notificationSource: '',
+}
+
+export function alert(state = initialState, action) {
     switch (action.type) {
-      case alertConstants.SUCCESS:
-        return {
-          type: 'success',
-          message: action.message
-        };
-      case alertConstants.ERROR:
-        return {
-          type: 'danger',
-          message: action.message
-        };
-      case alertConstants.CLEAR:
-        return {};
-      default:
-        return state
+        case alertConstants.SHOW:
+            return {
+                ...state,
+                notificationSource: action.notificationSource,
+            };
+        case alertConstants.HIDE:
+            return {
+                ...state,
+                notificationSource: ''
+            };
+        default:
+            return state;
     }
-  }
+}

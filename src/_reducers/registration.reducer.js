@@ -4,10 +4,12 @@ export function registration(state = {}, action) {
     switch (action.type) {
         case userConstants.REGISTRATION_REQUEST:
             return {
+                ...state,
                 registration: true
             };
         case userConstants.REGISTRATION_SUCCESS:
             return {
+                ...state,
                 loggedIn: true,
                 user: action.user
             };
