@@ -9468,6 +9468,13 @@ redux@^4.0.1:
     loose-envify "^1.4.0"
     symbol-observable "^1.2.0"
 
+refresh-fetch@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/refresh-fetch/-/refresh-fetch-0.6.0.tgz#2687bd614b8e689ec983232d034873b39ad2dbaf"
+  integrity sha512-UQ89AeXPKsoTFS0s7dYxWTlA0pbTB4SRq8v+PKz9Y6wy6bpM2lt8CaT1FpjrhojuDmDfnwadSRguBPbPdzcMLw==
+  dependencies:
+    lodash "^4.17.11"
+
 regenerate-unicode-properties@^8.0.2:
   version "8.0.2"
   resolved "https://registry.yarnpkg.com/regenerate-unicode-properties/-/regenerate-unicode-properties-8.0.2.tgz#7b38faa296252376d363558cfbda90c9ce709662"

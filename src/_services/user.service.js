@@ -1,5 +1,6 @@
 import { Cookies } from 'react-cookie';
 import config from 'config';
+import { login as LoginRequest } from '../_helpers';
 import { createRequestOptions } from './';
 
 export const userService = {
@@ -16,14 +17,7 @@ function login(username, password) {
     };
     const requestOptions = createRequestOptions(data);
 
-    return fetch(`${config.apiUrl}/auth/login`, requestOptions)
-        .then(handleResponse)
-        .then(user => {
-            cookie.set('access_token', user.access_token, { maxAge: 900 });
-            cookie.set('refresh_token', user.refresh_token, { maxAge: 30*24*60*60 }) // d*h*m*s
-
-            return user;
-        });
+    return LoginRequest(requestOptions);
 }
 
 function register(user) {
@@ -32,8 +26,8 @@ function register(user) {
     return fetch(`${config.apiUrl}/auth/registration`, requestOptions)
         .then(handleResponse)
         .then(user => {
-            cookie.set('access_token', user.access_token, { maxAge: 900 });
-            cookie.set('refresh_token', user.refresh_token, { maxAge: 30*24*60*60 }) // d*h*m*s
+            cookie.set('access_token', user.access_token);
+            cookie.set('refresh_token', user.refresh_token);
 
             return user;
         });
