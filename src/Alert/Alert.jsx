@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Alert } from 'reactstrap';
 
 import { alertActions } from '../_actions';
+import { getNotification } from '../_helpers';
 
 class AlertComponent extends React.Component {
     constructor(props) {
@@ -32,7 +33,7 @@ class AlertComponent extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        alert: state.alert
+        alert: state.alert.notification
     };
 }
 

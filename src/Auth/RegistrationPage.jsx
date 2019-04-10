@@ -1,62 +1,44 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Trans, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { push } from 'connected-react-router';
 import { Row,
     Col,
     Card,
     CardBody,
-    Form,
-    Input,
-    FormGroup,
     Button
 } from 'reactstrap';
+import {
+    AvForm,
+    AvGroup,
+    AvInput,
+    AvFeedback
+} from 'availity-reactstrap-validation';
 
 import { userActions } from '../_actions'
 
 class RegistrationPage extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            user: {
-                username: '',
-                email: '',
-                password: '',
-            },
-            submited: false,
-        };
-
-        this.handleChange = this.handleChange.bind(this);
+        this.props = props;
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange(event) {
-        const { name, value } = event.target;
-        const { user } = this.state;
-        this.setState({
-            user: {
-                ...user,
-                [name]: value
-            }
-        });
-    }
-
-    handleSubmit(event) {
-        event.preventDefault();
-        this.setState({ submited: true });
-
-        const { user } = this.state;
-        const { dispatch } = this.props;
-
-        if (user.username && user.email && user.password) {
-            dispatch(userActions.register(user));
+    handleSubmit(event, errors, values) {
+        if (values.username && values.email && values.password) {
+            this.props.register(values);
         }
     }
 
     render() {
-        const { registering, t } = this.props;
-        const { user, submited } = this.state;
+        const { t, loggedIn } = this.props;
+        if (loggedIn) {
+            return (
+                <Redirect to="/" />
+            )
+        }
         return (
             <React.Fragment>
                 <Row>
@@ -64,18 +46,21 @@ class RegistrationPage extends React.Component {
                         <Card>
                             <CardBody>
                                 <h3><Trans i18nKey="REGISTRATION_KEY"></Trans></h3>
-                                <Form name="registration" onSubmit={this.handleSubmit}>
-                                    <FormGroup>
-                                        <Input type="text" name="username" value={user.username} placeholder={t("Username")} onChange={this.handleChange}/>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Input type="email" name="email" value={user.email} placeholder={t("Email")} onChange={this.handleChange}/>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Input type="password" name="password" value={user.password} placeholder={t("Password")} onChange={this.handleChange}/>
-                                    </FormGroup>
-                                    <Button>{t("Register")}</Button>
-                                </Form>
+                                <AvForm name='registration' onSubmit={this.handleSubmit}>
+                                    <AvGroup>
+                                        <AvInput type="text" name="username" id="registrationUsername" placeholder={t("Username")} required />
+                                        <AvFeedback>{t("Username is required.")}</AvFeedback>
+                                    </AvGroup>
+                                    <AvGroup>
+                                        <AvInput type="text" name="email" id="registrationEmail" placeholder={t("Email")} required />
+                                        <AvFeedback>{t("Email is required.")}</AvFeedback>
+                                    </AvGroup>
+                                    <AvGroup>
+                                        <AvInput type="password" name="password" id="registrationPassword" placeholder={t("Password")} required />
+                                        <AvFeedback>{t("Password is required.")}</AvFeedback>
+                                    </AvGroup>
+                                    <Button>{t("Registration")}</Button>
+                                </AvForm>
                                 <Link to="/login"><Trans i18nKey="BACK_TO_LOGIN"></Trans></Link>
                             </CardBody>
                         </Card>
@@ -88,11 +73,22 @@ class RegistrationPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { registering } = state.registration;
+    const { registration } = state;
+    const { registered } = registration;
+    const { authentication } = state;
+    const { loggedIn } = authentication;
     return {
-        registering
+        registered,
+        loggedIn
     };
 }
 
-const connectedRegistrationPage = withTranslation()(connect(mapStateToProps)(RegistrationPage));
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        register: userActions.register,
+        push
+    }, dispatch)
+}
+
+const connectedRegistrationPage = withTranslation()(connect(mapStateToProps, mapDispatchToProps)(RegistrationPage));
 export { connectedRegistrationPage as RegistrationPage };

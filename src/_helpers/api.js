@@ -14,10 +14,10 @@ import {
     Cookies
 } from 'react-cookie';
 import config from 'config';
+import { func } from 'prop-types';
 
 const cookie = new Cookies();
 
-// Provide your favorite token saving -- to cookies, local storage, ...
 const retrieveToken = () => cookie.get('access_token');
 const saveToken = token => {
     cookie.set('access_token', token.access_token);
@@ -43,10 +43,27 @@ const fetchJSONWithToken = (url, options = {}) => {
     return fetchJSON(url, optionsWithToken)
 }
 
-const login = (options) => {
+const loginRequest = (values) => {
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(values),
+        credentials: 'same-origin',
+    }
     return fetchJSON(`${config.apiUrl}/auth/login`, options)
         .then(response => {
             saveToken(response.body);
+            return response.body;
+        });
+}
+
+const registerRequest = (values) => {
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(values),
+        credentials: 'same-origin',
+    };
+    return fetchJSON(`${config.apiUrl}/auth/registration`, options)
+        .then(response => {
             return response.body;
         });
 }
@@ -91,8 +108,30 @@ const logout = () => {
         })
 }
 
+function processError(error) {
+    if (!error.status) {
+        return error.message;
+    }
+    if (error.status == 400) {
+        console.log(error.body);
+        if (error.body.error.message) {
+            const errorM = error.body.error.message;
+            return errorM;
+        }
+    }
+    if (error.status == 422) {
+        for (const value in error.body) {
+            return (error.body[value])[0];
+        }
+    }
+    const errorM = error.body.error[0].message;
+    return errorM;
+}
+
 export {
     fetch,
-    login,
-    logout
+    loginRequest,
+    logout,
+    processError,
+    registerRequest,
 }

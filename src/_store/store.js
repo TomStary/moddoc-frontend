@@ -1,17 +1,35 @@
-import { createStore, applyMiddleware } from 'redux';
+import {
+    createStore,
+    applyMiddleware
+} from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { createLogger } from 'redux-logger';
-import { composeWithDevTools } from 'redux-devtools-extension'
+import {
+    createLogger
+} from 'redux-logger';
+import {
+    composeWithDevTools
+} from 'redux-devtools-extension';
+import {
+    createBrowserHistory
+} from 'history';
+import createRootReducer from '../_reducers';
+import { routerMiddleware } from 'connected-react-router';
 
-import rootReducer from '../_reducers';
-
+export const history = createBrowserHistory();
 const loggerMiddleware = createLogger();
 
-export const store = createStore(
-    rootReducer,
-    composeWithDevTools(
-        applyMiddleware(
-            thunkMiddleware,
-            loggerMiddleware
-        ))
-);
+
+export function configureStore(preloadedState) {
+    const store = createStore(
+        createRootReducer(history),
+        preloadedState,
+        composeWithDevTools(
+            applyMiddleware(
+                routerMiddleware(history),
+                thunkMiddleware,
+                loggerMiddleware
+            ))
+    )
+
+    return store
+}

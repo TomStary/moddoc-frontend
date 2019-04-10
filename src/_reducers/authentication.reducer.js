@@ -17,13 +17,13 @@ export function authentication(state = initialState, action) {
             return {
                 ...state,
                 loggedIn: false,
-                user: action.user
+                user: action
             };
         case userConstants.LOGIN_SUCCESS:
             return {
                 ...state,
                 loggedIn: true,
-                user: action.user
+                user: action
             };
         case userConstants.LOGIN_FAILURE:
             return {

@@ -30,6 +30,7 @@ class UserNav extends React.Component {
         const { t, loggedIn } = this.props;
 
         if (loggedIn) {
+            console.log(this.props);
             const { user } = this.props;
             return (
                 <UncontrolledDropdown nav inNavbar>

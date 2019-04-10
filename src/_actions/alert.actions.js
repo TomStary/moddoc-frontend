@@ -5,8 +5,8 @@ export const alertActions = {
     hideNotification
 };
 
-function showNotification(notificationSource) {
-    return { type: alertConstants.SHOW, notificationSource };
+function showNotification(notification) {
+    return { type: alertConstants.SHOW, notification };
 }
 
 function hideNotification() {

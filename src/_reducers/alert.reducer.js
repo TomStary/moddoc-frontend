@@ -3,7 +3,10 @@ import {
 } from '../_constants'
 
 const initialState = {
-    notificationSource: '',
+    notification: {
+        level: '',
+        message: '',
+    },
 }
 
 export function alert(state = initialState, action) {
@@ -11,12 +14,12 @@ export function alert(state = initialState, action) {
         case alertConstants.SHOW:
             return {
                 ...state,
-                notificationSource: action.notificationSource,
+                notification: action.notification,
             };
         case alertConstants.HIDE:
             return {
                 ...state,
-                notificationSource: ''
+                notification: initialState.notification
             };
         default:
             return state;

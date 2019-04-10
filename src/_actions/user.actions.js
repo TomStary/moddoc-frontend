@@ -1,7 +1,21 @@
-import { alertActions } from './';
-import { userConstants } from '../_constants';
-import { history, i18n, logout as LogoutR } from '../_helpers';
-import { userService } from '../_services';
+import {
+    alertActions
+} from './';
+import {
+    userConstants,
+    alertConstants
+} from '../_constants';
+import {
+    i18n,
+    logout as LogoutR,
+    loginRequest,
+    processError,
+    registerRequest
+} from '../_helpers';
+import {
+    userService
+} from '../_services';
+import { push } from 'connected-react-router';
 
 export const userActions = {
     login,
@@ -9,44 +23,72 @@ export const userActions = {
     logout
 }
 
-function login(username, password) {
-    userService.login(username, password)
-            .then(
-                token => {
-                    const localUser = {
-                        username: token.username,
-                    };
-                    localStorage.setItem('user', JSON.stringify(localUser));
-                    history.push('/');
-                    return { type: userConstants.LOGIN_REQUEST, token };
-                },
-                error => {
-                    return { type: userConstants.LOGIN_FAILURE, error };
-                }
-            );
+function login(values) {
+    return function (dispatch) {
+        loginRequest(values).
+            then(response => {
+                const localUser = {
+                    username: response.username,
+                };
+                localStorage.setItem('user', JSON.stringify(localUser));
+                dispatch({
+                    type: userConstants.LOGIN_SUCCESS,
+                    localUser
+                });
+                dispatch(push('/'));
+            })
+            .catch(error => {
+                localStorage.removeItem('user');
+                dispatch({
+                    type: userConstants.LOGIN_FAILURE,
+                    error
+                });
+                const notification = {
+                    level: 'danger',
+                    message: processError(error),
+                };
+                dispatch({
+                    type: alertConstants.SHOW,
+                    notification
+                })
+            });
+    };
 }
 
 function register(user) {
-    return dispatch => {
-        dispatch(request({ user }));
-
-        userService.register(user)
+    return function (dispatch) {
+        registerRequest(user)
             .then(
                 user => {
-                    dispatch(success(user));
-                    history.push('/');
-                    dispatch(alertActions.success(i18n.t('Successfully logged in.')));
-                },
-                error => {
-                    dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
-                }
-            );
+                    dispatch({
+                        type: userConstants.REGISTRATION_SUCCESS,
+                        user
+                    });
+                    const notification = {
+                        level: "success",
+                        message: i18n.t("Registration completed, you can now log to your account"),
+                    }
+                    dispatch({
+                        type: alertConstants.SHOW,
+                        notification
+                    });
+                    dispatch(push('/login'));
+                })
+            .catch(error => {
+                dispatch({
+                    type: userConstants.REGISTRATION_ERROR,
+                    error
+                });
+                const notification = {
+                    level: 'danger',
+                    message: processError(error),
+                };
+                dispatch({
+                    type: alertConstants.SHOW,
+                    notification
+                })
+            });
     };
-
-    function request(user) { return { type: userConstants.REGISTRATION_REQUEST, user } }
-    function success(user) { return { type: userConstants.REGISTRATION_SUCCESS, user } }
-    function failure(error) { return { type: userConstants.REGISTRATION_ERROR, error } }
 }
 
 
@@ -57,11 +99,14 @@ function logout() {
                 () => {
                     localStorage.removeItem('user');
                     dispatch(success());
-                    history.push('/');
                     dispatch(alertActions.success(i18n.t('Successfully logged out.')));
                 },
             );
     };
 
-    function success() { return { type: userConstants.LOGOUT } }
+    function success() {
+        return {
+            type: userConstants.LOGOUT
+        }
+    }
 }

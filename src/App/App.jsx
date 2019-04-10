@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Container, Row, Col, Jumbotron } from 'reactstrap';
 import { withTranslation } from 'react-i18next';
 
-import { history } from '../_helpers';
 import { LoginPage, RegistrationPage } from '../Auth';
 import { HomePage } from '../Home';
 import { NavComponent } from '../Nav';
@@ -13,6 +12,7 @@ import { AuthRouter } from '../_components';
 
 class App extends React.Component {
     render() {
+        const { history } = this.props;
         return (
             <React.Fragment>
                 <NavComponent />
