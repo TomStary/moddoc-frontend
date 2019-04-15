@@ -6,7 +6,8 @@ const cookie = new Cookies();
 
 export const AuthRouter = ({ component: Component, ...rest }) =>  (
     <Route {...rest} render={props => (
-            cookie.get('access_token') || cookie.get('refresh_token')
+            (cookie.get('access_token') && cookie.get('access_token') != '')
+            || (cookie.get('refresh_token') && cookie.get('refresh_token') != '')
             ? <Component {...props} />
             : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
     )} />

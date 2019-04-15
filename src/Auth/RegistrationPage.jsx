@@ -52,7 +52,7 @@ class RegistrationPage extends React.Component {
                                         <AvFeedback>{t("Username is required.")}</AvFeedback>
                                     </AvGroup>
                                     <AvGroup>
-                                        <AvInput type="text" name="email" id="registrationEmail" placeholder={t("Email")} required />
+                                        <AvInput type="email" name="email" id="registrationEmail" placeholder={t("Email")} required />
                                         <AvFeedback>{t("Email is required.")}</AvFeedback>
                                     </AvGroup>
                                     <AvGroup>

@@ -3,12 +3,14 @@ import { Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Container, Row, Col, Jumbotron } from 'reactstrap';
 import { withTranslation } from 'react-i18next';
+import { bindActionCreators } from 'redux';
 
 import { LoginPage, RegistrationPage } from '../Auth';
 import { HomePage } from '../Home';
 import { NavComponent } from '../Nav';
 import { AlertComponent } from '../Alert';
 import { AuthRouter } from '../_components';
+import { Profile } from '../User';
 
 class App extends React.Component {
     render() {
@@ -26,6 +28,7 @@ class App extends React.Component {
                                         <AuthRouter exact path="/" component={HomePage} />
                                         <Route path="/login" component={LoginPage} />
                                         <Route path="/registration" component={RegistrationPage} />
+                                        <AuthRouter path="/profile" component={Profile} />
                                     </div>
                                 </Router>
                             </Col>

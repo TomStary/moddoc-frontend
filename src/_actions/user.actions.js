@@ -1,41 +1,37 @@
-import {
-    alertActions
-} from './';
+import { push } from 'connected-react-router';
 import {
     userConstants,
     alertConstants
 } from '../_constants';
 import {
     i18n,
-    logout as LogoutR,
     loginRequest,
     processError,
     registerRequest
 } from '../_helpers';
-import {
-    userService
-} from '../_services';
-import { push } from 'connected-react-router';
+import { logoutRequest, getProfileRequest } from '../_services';
+import { Cookies } from 'react-cookie';
 
 export const userActions = {
     login,
     register,
-    logout
+    logout,
+    getProfile,
+    loginStatus
 }
 
 function login(values) {
     return function (dispatch) {
         loginRequest(values).
             then(response => {
-                const localUser = {
+                const user = {
                     username: response.username,
                 };
-                localStorage.setItem('user', JSON.stringify(localUser));
+                localStorage.setItem('user', JSON.stringify(user));
                 dispatch({
                     type: userConstants.LOGIN_SUCCESS,
-                    localUser
+                    user
                 });
-                dispatch(push('/'));
             })
             .catch(error => {
                 localStorage.removeItem('user');
@@ -53,6 +49,19 @@ function login(values) {
                 })
             });
     };
+}
+
+function loginStatus() {
+    return function(dispatch) {
+        const cookie = new Cookies();
+        if (!cookie.get('access_token') || cookie.get('access_token') == '') {
+            if (!cookie.get('refresh_token') || cookie.get('refresh_token') == '') {
+                localStorage.removeItem('user');
+                dispatch({type: userConstants.LOGOUT});
+                dispatch(push('/login'));
+            }
+        }
+    }
 }
 
 function register(user) {
@@ -93,20 +102,43 @@ function register(user) {
 
 
 function logout() {
-    return dispatch => {
-        LogoutR()
-            .then(
-                () => {
+    return function(dispatch) {
+        logoutRequest()
+            .then(() => {
                     localStorage.removeItem('user');
-                    dispatch(success());
-                    dispatch(alertActions.success(i18n.t('Successfully logged out.')));
-                },
-            );
-    };
+                    dispatch({type: userConstants.LOGOUT});
+                    dispatch(push('/login'));
+                }
+            )
+            .catch(error => {
+                const notification = {
+                    level: 'danger',
+                    message: processError(error),
+                };
+                dispatch({
+                    type: alertConstants.SHOW,
+                    notification
+                })
+            });
+    }
+}
 
-    function success() {
-        return {
-            type: userConstants.LOGOUT
-        }
+function getProfile() {
+    return function(dispatch) {
+        getProfileRequest()
+            .then(response => {
+                const user = response;
+                dispatch({type: userConstants.PROFILE_LOADED, user});
+            })
+            .catch(error => {
+                const notification = {
+                    level: 'danger',
+                    message: processError(error),
+                };
+                dispatch({
+                    type: alertConstants.SHOW,
+                    notification
+                })
+            });
     }
 }

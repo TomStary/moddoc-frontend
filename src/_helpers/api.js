@@ -14,14 +14,15 @@ import {
     Cookies
 } from 'react-cookie';
 import config from 'config';
-import { func } from 'prop-types';
 
 const cookie = new Cookies();
 
 const retrieveToken = () => cookie.get('access_token');
 const saveToken = token => {
     cookie.set('access_token', token.access_token);
-    cookie.set('refresh_token', token.refresh_token);
+    cookie.set('refresh_token', token.refresh_token, {
+        maxAge: 24*60*60
+    });
 }
 const clearToken = () => {
     cookie.set('access_token', '');
@@ -69,8 +70,7 @@ const registerRequest = (values) => {
 }
 
 const shouldRefreshToken = error =>
-    error.response.status === 401 &&
-    error.body.message === 'Token has expired'
+    error.status === 401
 
 const refreshToken = () => {
     return fetchJSONWithToken(`${config.apiUrl}/auth/refresh`, {
@@ -80,12 +80,13 @@ const refreshToken = () => {
             }
         })
         .then(response => {
-            saveToken(response.body.token)
+            saveToken(response.body.token);
         })
         .catch(error => {
             // Clear token and continue with the Promise catch chain
-            clearToken()
-            throw error
+            clearToken();
+            localStorage.removeItem('user');
+            throw error;
         })
 }
 
@@ -95,31 +96,23 @@ const fetch = configureRefreshFetch({
     refreshToken
 })
 
-const logout = () => {
-    const token = retrieveToken();
-    return fetch(`${config.apiUrl}/auth/logout`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        .then(() => {
-            clearToken()
-        })
-}
-
 function processError(error) {
     if (!error.status) {
         return error.message;
     }
     if (error.status == 400) {
-        console.log(error.body);
         if (error.body.error.message) {
             const errorM = error.body.error.message;
             return errorM;
         }
     }
+    if (error.status == 401) {
+        return 'Unauthorized.';
+    }
     if (error.status == 422) {
+        if (error.body.msg) {
+            return error.body.msg
+        }
         for (const value in error.body) {
             return (error.body[value])[0];
         }
@@ -131,7 +124,6 @@ function processError(error) {
 export {
     fetch,
     loginRequest,
-    logout,
     processError,
     registerRequest,
 }

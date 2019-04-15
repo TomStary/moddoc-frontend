@@ -27,6 +27,10 @@ class LoginPage extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.props.checkLoginStatus();
+    }
+
     render() {
         const { t, loggedIn } = this.props;
         if (loggedIn) {
@@ -74,6 +78,7 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(
         {
             login: userActions.login,
+            checkLoginStatus: userActions.loginStatus,
             alert: alertActions.showNotification,
         },
         dispatch

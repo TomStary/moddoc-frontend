@@ -15,7 +15,8 @@ i18n
                     REGISTRATION_KEY: "Create new account",
                     LOGIN_PAGE_HEADER: "Login to your accout",
                     BACK_TO_LOGIN: "Back to login.",
-                    REGISTRATION_LINK: "Don't have account yet, create a new one."
+                    REGISTRATION_LINK: "Don't have account yet, create a new one.",
+                    UPDATE: "Update"
                 }
             },
             cs: {
@@ -35,7 +36,8 @@ i18n
                     REGISTRATION_KEY: "Vytvořit nový účet",
                     LOGIN_PAGE_HEADER: "Přihlašte se ke svému účtu",
                     BACK_TO_LOGIN: "Zpět na přihlášení.",
-                    REGISTRATION_LINK: "Ještě nemáte účet? Založte si nový."
+                    REGISTRATION_LINK: "Ještě nemáte účet? Založte si nový.",
+                    UPDATE: "Uložit"
                 }
             }
         },
