@@ -19,6 +19,12 @@ export function profile(state=initalState, action) {
                 loaded: true,
                 user: action.user
             };
+        case userConstants.PROFILE_UPDATED:
+            return {
+                ...state,
+                loaded: true,
+                user: action.user,
+            }
         case userConstants.PROFILE_ERROR:
             return {
                 ...state,

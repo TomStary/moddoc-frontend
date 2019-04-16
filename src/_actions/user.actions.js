@@ -9,7 +9,7 @@ import {
     processError,
     registerRequest
 } from '../_helpers';
-import { logoutRequest, getProfileRequest } from '../_services';
+import { logoutRequest, getProfileRequest, updateProfileRequest } from '../_services';
 import { Cookies } from 'react-cookie';
 
 export const userActions = {
@@ -17,6 +17,7 @@ export const userActions = {
     register,
     logout,
     getProfile,
+    updateProfile,
     loginStatus
 }
 
@@ -139,6 +140,28 @@ function getProfile() {
                     type: alertConstants.SHOW,
                     notification
                 })
+            });
+    }
+}
+
+function updateProfile(profile) {
+    return function(dispatch) {
+        updateProfileRequest(profile)
+            .then(response => {
+                const user = response;
+                const notification = {
+                    level: 'success',
+                    message: i18n.t("Profile successfully updated.")
+                }
+                dispatch({type: userConstants.PROFILE_UPDATED, user});
+                dispatch({type: alertConstants.SHOW, notification})
+            })
+            .catch(error => {
+                const notification = {
+                    level: 'danger',
+                    message: processError(error),
+                };
+                dispatch({type: alertConstants.SHOW, notification});
             });
     }
 }

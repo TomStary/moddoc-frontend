@@ -11,6 +11,7 @@ import { NavComponent } from '../Nav';
 import { AlertComponent } from '../Alert';
 import { AuthRouter } from '../_components';
 import { Profile } from '../User';
+import { Repositories } from '../Repository/Repositories';
 
 class App extends React.Component {
     render() {
@@ -29,6 +30,7 @@ class App extends React.Component {
                                         <Route path="/login" component={LoginPage} />
                                         <Route path="/registration" component={RegistrationPage} />
                                         <AuthRouter path="/profile" component={Profile} />
+                                        <AuthRouter path="/repositories" component={Repositories} />
                                     </div>
                                 </Router>
                             </Col>

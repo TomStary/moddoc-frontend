@@ -22,3 +22,12 @@ export function getProfileRequest() {
         return response.body;
     });
 }
+
+export function updateProfileRequest(profile) {
+    return fetch(`${config.apiUrl}/user/yourself`, {
+        method: 'POST',
+        body: JSON.stringify(profile),
+    }).then(response => {
+        return response.body;
+    })
+}

@@ -21,6 +21,9 @@ class Profile extends React.Component {
     }
 
     handleSubmit(event, errors, values) {
+        if (errors.length == 0) {
+            this.props.updateProfile(values);
+        }
     }
 
     componentDidMount() {
@@ -44,6 +47,7 @@ class Profile extends React.Component {
                     <CardBody>
                         <h3>{t("Your profile")}</h3>
                         <AvForm name='user' onSubmit={this.handleSubmit}>
+                            <AvInput type="hidden" name="id" id="profileId" value={user.id} />
                             <AvGroup>
                                 <Label>{t("Username")}</Label>
                                 <AvInput type="text" name="username" id="profileUsername" value={user.username} required />
@@ -75,7 +79,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
     {
-        getProfile: userActions.getProfile
+        getProfile: userActions.getProfile,
+        updateProfile: userActions.updateProfile,
     }, dispatch);
 }
 
