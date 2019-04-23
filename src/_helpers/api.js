@@ -19,14 +19,15 @@ const cookie = new Cookies();
 
 const retrieveToken = () => cookie.get('access_token');
 const saveToken = token => {
-    cookie.set('access_token', token.access_token);
+    cookie.set('access_token', token.access_token, {path: '/'});
     cookie.set('refresh_token', token.refresh_token, {
-        maxAge: 24*60*60
+        maxAge: 24*60*60,
+        path: '/'
     });
 }
 const clearToken = () => {
-    cookie.set('access_token', '');
-    cookie.set('refresh_token', '');
+    cookie.set('access_token', '', {path: '/'});
+    cookie.set('refresh_token', '', {path: '/'});
 }
 
 const fetchJSONWithToken = (url, options = {}) => {

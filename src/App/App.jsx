@@ -11,7 +11,7 @@ import { NavComponent } from '../Nav';
 import { AlertComponent } from '../Alert';
 import { AuthRouter } from '../_components';
 import { Profile } from '../User';
-import { Repositories } from '../Repository/Repositories';
+import { Repositories, RepositoryForm } from '../Repository';
 
 class App extends React.Component {
     render() {

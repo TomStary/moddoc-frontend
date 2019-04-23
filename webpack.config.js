@@ -29,6 +29,9 @@ module.exports = {
     plugins: [new HtmlWebpackPlugin({
         template: './src/index.html'
     })],
+    output: {
+        publicPath: '/',
+    },
     devServer: {
         historyApiFallback: true,
         disableHostCheck: true

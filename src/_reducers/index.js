@@ -6,6 +6,7 @@ import { authentication } from './authentication.reducer';
 import { registration } from './registration.reducer';
 import { profile } from './profile.reducer';
 import { repositories } from './repositories.reducer';
+import { repository } from './repository.reducer';
 
 export default (history) => combineReducers({
   alert,
