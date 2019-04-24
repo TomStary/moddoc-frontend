@@ -24,10 +24,10 @@ class Repositories extends React.Component {
 
     render() {
         const { loaded, t, data } = this.props;
-
         const columns = [{
             Header: t("Name"),
             accessor: 'name',
+            Cell: cellInfo => (<Link to={`/repository/${cellInfo.original.id}`}>{cellInfo.row.name}</Link>),
         }, {
             id: 'owner',
             Header: t("Owner"),

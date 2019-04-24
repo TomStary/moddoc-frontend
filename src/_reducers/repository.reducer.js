@@ -11,6 +11,11 @@ export function repository(state = initialState, action) {
                 ...state,
                 data: {},
             };
+        case repositoriesConstants.REPOSITORY_LOADED:
+            return {
+                ...state,
+                data: action.reposiotry,
+            }
         default:
             return state;
     }

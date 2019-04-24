@@ -10,3 +10,13 @@ export function getAllRepositories() {
             return response.body;
         });
 }
+
+export function postRepository(data) {
+    return fetch(`${config.apiUrl}/repository`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+    })
+    .then(response => {
+        return response.body;
+    })
+}

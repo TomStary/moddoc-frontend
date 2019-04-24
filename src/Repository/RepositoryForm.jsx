@@ -5,10 +5,20 @@ import { withTranslation, Trans } from 'react-i18next';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { repositoryActions } from '../_actions';
+
 class RepositoryForm extends React.Component {
     constructor(props) {
         super(props);
         this.props = props;
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(event, errors, values) {
+        if (errors.length == 0) {
+            this.props.createOrUpdate(values);
+        }
     }
 
     render() {
@@ -19,8 +29,7 @@ class RepositoryForm extends React.Component {
                 <Card>
                     <CardBody>
                         <h3>{t("Repository")}</h3>
-                        <AvForm>
-                            <AvInput type="hidden" name="id" id="repositoryId" />
+                        <AvForm onSubmit={this.handleSubmit}>
                             <AvGroup>
                                 <Label>{t("Name")}</Label>
                                 <AvInput type="text" name="name" id="repositoryName" required />
@@ -42,9 +51,10 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
     {
+        createOrUpdate: repositoryActions.createOrUpdateRepository
     }, dispatch);
 }
 
-const RepositoryFormComponent = withTranslation()(connect()(RepositoryForm));
+const RepositoryFormComponent = withTranslation()(connect(mapStateToProps, mapDispatchToProps)(RepositoryForm));
 
 export { RepositoryFormComponent as RepositoryForm };

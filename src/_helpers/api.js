@@ -74,14 +74,14 @@ const shouldRefreshToken = error =>
     error.status === 401
 
 const refreshToken = () => {
-    return fetchJSONWithToken(`${config.apiUrl}/auth/refresh`, {
+    return fetchJSON(`${config.apiUrl}/auth/refresh`, {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${cookie.get('refresh_token')}`
+                Authorization: `Bearer ${cookie.get('refresh_token')}`
             }
         })
         .then(response => {
-            saveToken(response.body.token);
+            cookie.set('access_token', response.body.access_token, {path: '/'});
         })
         .catch(error => {
             // Clear token and continue with the Promise catch chain

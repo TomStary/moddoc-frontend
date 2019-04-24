@@ -11,7 +11,7 @@ import { NavComponent } from '../Nav';
 import { AlertComponent } from '../Alert';
 import { AuthRouter } from '../_components';
 import { Profile } from '../User';
-import { Repositories, RepositoryForm } from '../Repository';
+import { Repositories, RepositoryForm, Repository } from '../Repository';
 
 class App extends React.Component {
     render() {
@@ -31,6 +31,7 @@ class App extends React.Component {
                                         <Route path="/registration" component={RegistrationPage} />
                                         <AuthRouter path="/profile" component={Profile} />
                                         <AuthRouter path="/repositories" component={Repositories} />
+                                        <AuthRouter path="/repository" component={Repository} />
                                     </div>
                                 </Router>
                             </Col>
