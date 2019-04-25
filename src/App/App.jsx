@@ -21,21 +21,17 @@ class App extends React.Component {
                 <NavComponent />
                 <Jumbotron>
                     <Container>
-                        <Row>
-                            <Col sm={{ size: 8, offset: 2 }}>
-                                <AlertComponent />
-                                <Router history={history}>
-                                    <div>
-                                        <AuthRouter exact path="/" component={HomePage} />
-                                        <Route path="/login" component={LoginPage} />
-                                        <Route path="/registration" component={RegistrationPage} />
-                                        <AuthRouter path="/profile" component={Profile} />
-                                        <AuthRouter path="/repositories" component={Repositories} />
-                                        <AuthRouter path="/repository" component={Repository} />
-                                    </div>
-                                </Router>
-                            </Col>
-                        </Row>
+                        <AlertComponent />
+                        <Router history={history}>
+                            <div>
+                                <AuthRouter exact path="/" component={HomePage} />
+                                <Route path="/login" component={LoginPage} />
+                                <Route path="/registration" component={RegistrationPage} />
+                                <AuthRouter path="/profile" component={Profile} />
+                                <AuthRouter path="/repositories" component={Repositories} />
+                                <AuthRouter path="/repository" component={Repository} />
+                            </div>
+                        </Router>
                     </Container>
                 </Jumbotron>
             </React.Fragment>

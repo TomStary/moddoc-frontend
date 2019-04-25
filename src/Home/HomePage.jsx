@@ -1,14 +1,28 @@
 import React from 'react';
-import { Cookies } from 'react-cookie';
+import { Row, Col, Card,
+    CardBody, CardImg,
+    CardImgOverlay, CardTitle } from 'reactstrap';
 import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import Folder from '@material-ui/icons/Folder';
 
 class HomePage extends React.Component {
     render() {
-        const { user } = this.props;
+        const { user, t } = this.props;
         return (
-            <div className="col-md-6 col-md-offset-3">
-                <h1>Hi {user.username}!</h1>
-            </div>
+            <React.Fragment>
+                <h2>{t("Welcome")}&nbsp;{user.username}!</h2>
+                <Row>
+                    <Col sm={{size: 3}}>
+                        <Card tag={Link} to="/repositories">
+                            <CardTitle>{t("Repositories")}</CardTitle>
+                            <CardBody>
+                            </CardBody>
+                        </Card>
+                    </Col>
+                </Row>
+            </React.Fragment>
         );
     }
 }
@@ -21,5 +35,5 @@ function mapStateToProps(state) {
     };
 }
 
-const connectedHomePage = connect(mapStateToProps)(HomePage);
+const connectedHomePage = connect(mapStateToProps)(withTranslation()(HomePage));
 export { connectedHomePage as HomePage };

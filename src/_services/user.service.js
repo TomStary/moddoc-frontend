@@ -10,8 +10,8 @@ export function logoutRequest() {
             method: 'GET'
         })
         .then(() => {
-            cookie.set('access_token', '');
-            cookie.set('refresh_token', '');
+            cookie.set('access_token', '', { path: '/' });
+            cookie.set('refresh_token', '', { path: '/' });
         });
 }
 

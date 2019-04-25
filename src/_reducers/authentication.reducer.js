@@ -1,3 +1,5 @@
+import { Cookies } from 'react-cookie';
+
 import {
     userConstants
 } from '../_constants';

@@ -7,7 +7,6 @@ import 'react-table/react-table.css'
 import { Button, Row, Col, Container } from 'reactstrap';
 import { bindActionCreators } from 'redux';
 
-import { RepositoryForm } from '.';
 import { repositoryActions } from '../_actions';
 
 class Repositories extends React.Component {
@@ -34,13 +33,12 @@ class Repositories extends React.Component {
             accessor: d => d.owner.username,
         }];
 
-        console.log(data);
         return (
             <React.Fragment>
                 <Container>
                     <Row className="mb-4">
-                        <Col md={{offset: 8, size: 4}}>
-                            <Button tag={Link} to="/repository/create">{t("Create new repository")}</Button>
+                        <Col md={{offset: 9, size: 3}}>
+                            <Button block tag={Link} to="/repository/create">{t("Create new repository")}</Button>
                         </Col>
                     </Row>
                     <Row>

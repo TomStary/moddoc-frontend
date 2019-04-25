@@ -16,7 +16,8 @@ i18n
                     LOGIN_PAGE_HEADER: "Login to your accout",
                     BACK_TO_LOGIN: "Back to login.",
                     REGISTRATION_LINK: "Don't have account yet, create a new one.",
-                    UPDATE: "Update"
+                    UPDATE: "Update",
+                    REPOSITORY_HEADER: "Repository",
                 }
             },
             cs: {
@@ -37,7 +38,8 @@ i18n
                     LOGIN_PAGE_HEADER: "Přihlašte se ke svému účtu",
                     BACK_TO_LOGIN: "Zpět na přihlášení.",
                     REGISTRATION_LINK: "Ještě nemáte účet? Založte si nový.",
-                    UPDATE: "Uložit"
+                    UPDATE: "Uložit",
+                    REPOSITORY_HEADER: "Repozitář",
                 }
             }
         },

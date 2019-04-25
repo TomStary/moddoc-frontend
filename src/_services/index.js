@@ -1,4 +1,5 @@
 export * from './user.service'
+export * from './modules.service'
 export * from './repository.service'
 
 export function createRequestOptions(data) {

@@ -11,6 +11,15 @@ export function getAllRepositories() {
         });
 }
 
+export function getRepositoryById(id) {
+    return fetch(`${config.apiUrl}/repository/${id}`, {
+        method: 'GET',
+    })
+    .then(response => {
+        return response.body;
+    })
+}
+
 export function postRepository(data) {
     return fetch(`${config.apiUrl}/repository`, {
         method: 'POST',
