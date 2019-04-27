@@ -12,6 +12,7 @@ import { AlertComponent } from '../Alert';
 import { AuthRouter } from '../_components';
 import { Profile } from '../User';
 import { Repositories, RepositoryForm, Repository } from '../Repository';
+import { Module } from '../Module';
 
 class App extends React.Component {
     render() {
@@ -30,6 +31,7 @@ class App extends React.Component {
                                 <AuthRouter path="/profile" component={Profile} />
                                 <AuthRouter path="/repositories" component={Repositories} />
                                 <AuthRouter path="/repository" component={Repository} />
+                                <AuthRouter path="/module" component={Module} />
                             </div>
                         </Router>
                     </Container>

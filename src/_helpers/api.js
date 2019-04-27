@@ -114,6 +114,11 @@ function processError(error) {
         if (error.body.msg) {
             return error.body.msg
         }
+        if (error.body.error) {
+            for (const value in error.body.error) {
+                return (error.body.error[value])[0];
+            }
+        }
         for (const value in error.body) {
             return (error.body[value])[0];
         }

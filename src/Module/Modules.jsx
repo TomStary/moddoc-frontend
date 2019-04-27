@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Card, CardBody } from 'reactstrap';
+import { Card, CardBody, CardTitle,
+    Button, Row, Col } from 'reactstrap';
 import { withTranslation } from 'react-i18next';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css'
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
 
 import { modulesActions } from '../_actions';
 
@@ -32,6 +34,18 @@ class Modules extends React.Component {
             <React.Fragment>
                 <Card>
                     <CardBody>
+                        <CardTitle>
+                            <Row className="mb-4">
+                                <Col>
+                                    <h3>
+                                        {t("Modules")}
+                                    </h3>
+                                </Col>
+                                <Col md={{size: 3}}>
+                                    <Button block tag={Link} to={`/module/create/${this.props.repositoryId}`}>{t("Create module")}</Button>
+                                </Col>
+                            </Row>
+                        </CardTitle>
                         <ReactTable
                             loading={!loaded}
                             data={data}

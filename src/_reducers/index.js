@@ -8,6 +8,7 @@ import { profile } from './profile.reducer';
 import { repositories } from './repositories.reducer';
 import { repository } from './repository.reducer';
 import { modules } from './modules.reducer';
+import { module } from './module.reducer';
 
 export default (history) => combineReducers({
   alert,
@@ -17,5 +18,6 @@ export default (history) => combineReducers({
   repositories,
   repository,
   modules,
+  module,
   router: connectRouter(history)
 });
