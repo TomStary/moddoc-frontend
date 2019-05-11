@@ -132,4 +132,5 @@ export {
     loginRequest,
     processError,
     registerRequest,
+    refreshToken,
 }

@@ -32,7 +32,9 @@ class ModuleDetail extends React.Component {
                 <Card>
                     <CardBody>
                         <CardTitle>{t("Body")}</CardTitle>
-                        <CardText>{data.body}</CardText>
+                        <CardText className="customTextBox">
+                            {data.body}
+                        </CardText>
                     </CardBody>
                 </Card>
             </React.Fragment>

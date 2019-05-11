@@ -7,7 +7,8 @@ import {
     i18n,
     loginRequest,
     processError,
-    registerRequest
+    registerRequest,
+    refreshToken
 } from '../_helpers';
 import { logoutRequest, getProfileRequest, updateProfileRequest } from '../_services';
 import { Cookies } from 'react-cookie';
@@ -60,6 +61,8 @@ function loginStatus() {
                 localStorage.removeItem('user');
                 dispatch({type: userConstants.LOGOUT});
                 dispatch(push('/login'));
+            } else {
+                refreshToken();
             }
         }
     }

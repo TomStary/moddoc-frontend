@@ -13,6 +13,7 @@ import { AuthRouter } from '../_components';
 import { Profile } from '../User';
 import { Repositories, RepositoryForm, Repository } from '../Repository';
 import { Module } from '../Module';
+import style from './App.scss';
 
 class App extends React.Component {
     render() {

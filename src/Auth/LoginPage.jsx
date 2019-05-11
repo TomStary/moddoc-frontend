@@ -27,6 +27,10 @@ class LoginPage extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.props.checkLoginStatus();
+    }
+
     render() {
         const { t, loggedIn } = this.props;
         if (loggedIn) {

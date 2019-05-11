@@ -9,8 +9,8 @@ class Module extends React.Component {
         return (
             <React.Fragment>
                 <Switch>
-                    <Route path={`${match.url}/:moduleId`} component={ModuleDetail} />
                     <Route path={`${match.url}/create/:repositoryId`} component={ModuleForm} />
+                    <Route path={`${match.url}/:moduleId`} component={ModuleDetail} />
                 </Switch>
             </React.Fragment>
         )
