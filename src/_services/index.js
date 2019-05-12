@@ -1,6 +1,7 @@
-export * from './user.service'
-export * from './modules.service'
-export * from './repository.service'
+export * from './user.service';
+export * from './documents.service';
+export * from './modules.service';
+export * from './repository.service';
 
 export function createRequestOptions(data) {
     return {

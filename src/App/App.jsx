@@ -13,6 +13,7 @@ import { AuthRouter } from '../_components';
 import { Profile } from '../User';
 import { Repositories, RepositoryForm, Repository } from '../Repository';
 import { Module } from '../Module';
+import { Documents, Document } from '../Document';
 import style from './App.scss';
 
 class App extends React.Component {
@@ -33,6 +34,8 @@ class App extends React.Component {
                                 <AuthRouter path="/repositories" component={Repositories} />
                                 <AuthRouter path="/repository" component={Repository} />
                                 <AuthRouter path="/module" component={Module} />
+                                <AuthRouter path="/documents" component={Documents} />
+                                <AuthRouter path="/document" component={Document} />
                             </div>
                         </Router>
                     </Container>

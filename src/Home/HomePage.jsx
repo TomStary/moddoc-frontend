@@ -21,6 +21,13 @@ class HomePage extends React.Component {
                             </CardBody>
                         </Card>
                     </Col>
+                    <Col sm={{size: 3}}>
+                        <Card tag={Link} to="/documents">
+                            <CardTitle>{t("Documents")}</CardTitle>
+                            <CardBody>
+                            </CardBody>
+                        </Card>
+                    </Col>
                 </Row>
             </React.Fragment>
         );

@@ -1,30 +1,29 @@
+import { alertConstants, documentsConstants } from '../_constants';
+import { getDocuments,
+    createOrUpdateDocument,
+    loadDocumentById
+} from '../_services';
 import { push } from 'connected-react-router';
 
-import { modulesConstants, alertConstants } from '../_constants';
-import { getModulesByRepositoryId,
-    createOrUpdateModulePost,
-    loadModuleById } from '../_services';
-import { processError } from '../_helpers';
-
-export const modulesActions = {
-    getAllModulesForRepository,
-    createModule,
-    loadModule,
+export const documentsActions = {
+    getAllDocuments,
+    createDocument,
+    loadDocument,
 };
 
-function getAllModulesForRepository(repositoryId) {
+function getAllDocuments() {
     return function(dispatch) {
-        getModulesByRepositoryId(repositoryId).
-            then(reponse => {
-                const modules = reponse;
-                dispatch({type: modulesConstants.MODULES_LOADED, modules});
+        getDocuments()
+            .then(response => {
+                const documents = response;
+                dispatch({type: documentsConstants.DOCUMENTS_LOADED, documents});
             })
             .catch(error => {
                 const notification = {
                     level: 'danger',
                     message: processError(error),
                 };
-                dispatch({type: modulesConstants.MODULES_FAILED, error});
+                dispatch({type: documentsConstants.DOCUMENTS_FAILED, error});
                 dispatch({
                     type: alertConstants.SHOW,
                     notification
@@ -33,11 +32,32 @@ function getAllModulesForRepository(repositoryId) {
     }
 }
 
-function createModule(data) {
+function loadDocument(documentId) {
     return function(dispatch) {
-        createOrUpdateModulePost(data)
-            .then(reponse => {
-                dispatch(push(`/module/${reponse.id}`));
+        loadDocumentById(documentId)
+            .then(response =>  {
+                const document = response;
+                dispatch({type: documentsConstants.DOCUMENT_LOADED, document});
+            })
+            .catch(error => {
+                const notification = {
+                    level: 'danger',
+                    message: processError(error),
+                };
+                dispatch({type: documentsConstants.DOCUMENT_FAILED, error});
+                dispatch({
+                    type: alertConstants.SHOW,
+                    notification
+                });
+            })
+    }
+}
+
+function createDocument(data) {
+    return function(dispatch) {
+        createOrUpdateDocument(data)
+            .then(response => {
+                dispatch(push(`/document/${response.id}`));
             })
             .catch(error => {
                 const notification = {
@@ -49,26 +69,5 @@ function createModule(data) {
                     notification
                 });
             });
-    };
-}
-
-function loadModule(moduleId) {
-    return function(dispatch) {
-        loadModuleById(moduleId)
-            .then(response =>  {
-                const module = response;
-                dispatch({type: modulesConstants.MODULE_LOADED, module});
-            })
-            .catch(error => {
-                const notification = {
-                    level: 'danger',
-                    message: processError(error),
-                };
-                dispatch({type: modulesConstants.MODULE_FAILED, error});
-                dispatch({
-                    type: alertConstants.SHOW,
-                    notification
-                });
-            })
     }
 }
