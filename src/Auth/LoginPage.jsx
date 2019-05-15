@@ -22,7 +22,7 @@ class LoginPage extends React.Component {
     }
 
     handleSubmit(e, err, val) {
-        if (val.username && val.password) {
+        if (err.length == 0) {
             this.props.login(val);
         }
     }
